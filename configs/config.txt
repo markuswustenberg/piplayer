@@ -1,0 +1,3 @@
+#dtparam=audio=on
+dtoverlay=hifiberry-dacplus
+force_eeprom_read=0

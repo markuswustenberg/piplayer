@@ -1,0 +1,8 @@
+github.com/go-chi/chi v1.5.1 h1:kfTK3Cxd/dkMu/rKs5ZceWYp+t5CtiE7vmaTv3LjC6w=
+github.com/go-chi/chi v1.5.1/go.mod h1:REp24E+25iKvxgeTfHmdUoL5x15kBiDBlnIl5bCwe2k=
+github.com/joho/godotenv v1.3.0 h1:Zjp+RcGpHhGlrMbJzXTrZZPrWj+1vfm90La1wgB6Bhc=
+github.com/joho/godotenv v1.3.0/go.mod h1:7hK45KPybAkOC6peb+G5yklZfMxEjkZhHbwpqxOKXbg=
+github.com/maragudk/errors v0.1.0 h1:gsB70MvCwnCCEOHaSOrkyGF7Yf4vAuj4QJj+cB7hckg=
+github.com/maragudk/errors v0.1.0/go.mod h1:6YewPLf5sbfdMje7CoPCwLbJ92uLx4dHZNaYnSFAXGM=
+github.com/maragudk/gomponents v0.14.0 h1:6HPB9XksIa0fOEaOBe48cDh2GAuX72Fsk+iVSr7Yj7I=
+github.com/maragudk/gomponents v0.14.0/go.mod h1:0OdlqOoqxcwvhBFrp8wlKHnEXhNB7IVhb8GuARmd+tI=
