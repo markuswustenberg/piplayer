@@ -9,6 +9,7 @@ import (
 
 	"piplayer/player"
 	"piplayer/server"
+	"piplayer/tagreader"
 )
 
 func main() {
@@ -27,6 +28,30 @@ func start() int {
 		Password: getStringOrDefault("PLAYER_PASSWORD", ""),
 		Port:     getIntOrDefault("PLAYER_PORT", 8080),
 	})
+
+	tr := tagreader.New(tagreader.Options{
+		Debug: false,
+		Log:   logger,
+	})
+	if err := tr.Open(getStringOrDefault("TAG_READER_PATH", "/dev/input/event0")); err != nil {
+		logger.Println("Error opening tag reader:", err)
+		return 1
+	}
+	defer func() {
+		if err := tr.Close(); err != nil {
+			logger.Println("Error closing tag reader:", err)
+		}
+	}()
+
+	go func() {
+		for {
+			id, err := tr.Read()
+			if err != nil {
+				logger.Println("Error reading tag:", err)
+			}
+			p.PlayFromID(id)
+		}
+	}()
 
 	s := server.New(server.Options{
 		Host:   getStringOrDefault("HOST", ""),

@@ -75,6 +75,18 @@ func (p *Player) request(ctx context.Context, command string) error {
 	return nil
 }
 
+func (p *Player) PlayFromID(id string) error {
+	p.log.Println("Try playing id", id)
+	album, err := p.GetAlbum(id)
+	if err != nil {
+		return err
+	}
+	if album == nil {
+		return nil
+	}
+	return p.Play(context.Background(), album.Path)
+}
+
 // escape a path so VLC understands it.
 func escape(path string) string {
 	// For some reason VLC does not understand the format used by url.QueryEscape

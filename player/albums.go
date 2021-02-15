@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"path"
+	"strings"
 
 	"piplayer/model"
 )
@@ -28,8 +29,15 @@ func (p *Player) GetAlbums() ([]model.Album, error) {
 			if !artistAlbum.IsDir() {
 				continue
 			}
+
+			id := fmt.Sprintf("%x", md5.Sum([]byte(path.Join(artist.Name(), artistAlbum.Name()))))
+			idFromFile, err := ioutil.ReadFile(path.Join(p.dir, artist.Name(), artistAlbum.Name(), "id.txt"))
+			if err == nil {
+				id = strings.TrimSpace(string(idFromFile))
+			}
+
 			albums = append(albums, model.Album{
-				ID:     fmt.Sprintf("%x", md5.Sum([]byte(path.Join(artist.Name(), artistAlbum.Name())))),
+				ID:     id,
 				Name:   artistAlbum.Name(),
 				Artist: artist.Name(),
 				Path:   path.Join(artist.Name(), artistAlbum.Name()),
