@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"path"
+	"sort"
 	"strings"
 
 	"piplayer/model"
@@ -17,6 +18,14 @@ func (p *Player) GetAlbums() ([]model.Album, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// Make sure the artists are sorted without considering case and "The " in the name
+	sort.Slice(artists, func(i, j int) bool {
+		artist1 := strings.TrimPrefix(artists[i].Name(), "The ")
+		artist2 := strings.TrimPrefix(artists[j].Name(), "The ")
+		return strings.ToLower(artist1) < strings.ToLower(artist2)
+	})
+
 	for _, artist := range artists {
 		if !artist.IsDir() {
 			continue
