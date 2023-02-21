@@ -1,14 +1,33 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: [
+  content: [
     "./views/*.go",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'mono': [...defaultTheme.fontFamily.mono],
+        'sans': [...defaultTheme.fontFamily.sans],
+        'serif': [...defaultTheme.fontFamily.serif],
+      },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            'code::before': {
+              content: 'none',
+            },
+            'code::after': {
+              content: 'none',
+            }
+          }
+        }
+      })
+    }
   },
-  variants: {},
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
-    require('@tailwindcss/aspect-ratio'),
   ],
 }

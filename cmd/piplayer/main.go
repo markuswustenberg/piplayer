@@ -33,9 +33,10 @@ func start() int {
 		Debug: false,
 		Log:   logger,
 	})
+	readTags := true
 	if err := tr.Open(getStringOrDefault("TAG_READER_PATH", "/dev/input/event0")); err != nil {
 		logger.Println("Error opening tag reader:", err)
-		return 1
+		readTags = false
 	}
 	defer func() {
 		if err := tr.Close(); err != nil {
@@ -43,15 +44,17 @@ func start() int {
 		}
 	}()
 
-	go func() {
-		for {
-			id, err := tr.Read()
-			if err != nil {
-				logger.Println("Error reading tag:", err)
+	if readTags {
+		go func() {
+			for {
+				id, err := tr.Read()
+				if err != nil {
+					logger.Println("Error reading tag:", err)
+				}
+				p.PlayFromID(id)
 			}
-			p.PlayFromID(id)
-		}
-	}()
+		}()
+	}
 
 	s := server.New(server.Options{
 		Host:   getStringOrDefault("HOST", ""),
